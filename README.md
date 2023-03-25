@@ -1,2 +1,2 @@
 # DailyTodo
-Féléves projekt Linux ismeretek (GKNB_MSTM028) tárgyra
+Féléves projekt Linux ismeretek (GKNB_MSTM028) tárgyra.
