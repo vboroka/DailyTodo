@@ -1,46 +1,36 @@
 #!/bin/bash
 
-# Az "napirend.txt" fájl beolvasása a "napirend" tömbbe
-IFS=$'\n' read -d '' -r -a napirend < napirend.txt
+# A napirendünk tartalmát ebben a fájlban tároljuk
+file="napirend.txt"
 
-# Az "add_task" függvény, amely lehetővé teszi az új napirendi tétel hozzáadását a "napirend" tömbhöz
-function add_task {
-    echo "Add meg az új tételt:"
-    read new_task
-    napirend+=("$new_task")
-    echo "Az új tétel hozzáadva az alábbiakhoz:"
-    echo "${napirend[@]}"
+# Ellenőrizzük, hogy létezik-e a fájl, ha nem, létrehozzuk
+if [ ! -f $file ]; then
+    touch $file
+fi
+
+# Kilistázzuk a napirendet
+function list {
+    echo "A napirended:"
+    echo "--------------"
+    cat $file
 }
 
-# A "remove_task" függvénnyel feladatokat lehet eltávolítani a napirendből
-function remove_task {
-    echo "Melyik tételt szeretnéd törölni? Adja meg a sorszámát:"
-    read index
-    unset napirend[$index-1]
-    echo "A kiválasztott tétel törölve lett. Az új napirend:"
-    echo "${napirend[@]}"
+# Hozzáadjuk az új feladatot a napirendhez
+function add {
+    echo "Add meg az új feladatot:"
+    read task
+    echo $task >> $file
+    echo "Feladat hozzáadva a napirendhez."
 }
 
-# A "show_list" függvény kiíratja a napirendet.
-function show_list {
-    echo "A napirend:"
-    echo "${napirend[@]}"
+# Töröljük a megadott feladatot a napirendből
+function remove {
+    echo "Add meg a törölni kívánt feladat sorszámát:"
+    read num
+    sed -i "${num}d" $file
+    echo "Feladat törölve a napirendből."
 }
 
-# A "show_menu" függvény jeleníti meg nekünk azokat az opciókat, amelyeke
-function show_menu {
-    echo "Napirend alkalmazás"
-    echo "-------------------"
-    echo "1. Napirend megjelenítése"
-    echo "2. Napirendi tétel hozzáadása"
-    echo "3. Napirendi tétel törlése"
-    echo "4. Kilépés"
-    echo "-------------------"
-    echo
-    echo -n "Válassz egy menüpontot [1-4]: "
-}
-
-# A programot mozgató fő függvény
 # Az alkalmazás főciklusa
 while true
 do
