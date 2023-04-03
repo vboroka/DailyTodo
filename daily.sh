@@ -39,3 +39,24 @@ function show_menu {
     echo
     echo -n "Válassz egy menüpontot [1-4]: "
 }
+
+# A programot mozgató fő függvény
+# Az alkalmazás főciklusa
+while true
+do
+    echo ""
+    echo "Mit szeretnél tenni?"
+    echo "1. Napirend kilistázása"
+    echo "2. Új feladat hozzáadása"
+    echo "3. Feladat törlése"
+    echo "4. Kilépés"
+    read choice
+
+    case $choice in
+        1) list;;
+        2) add;;
+        3) remove;;
+        4) exit;;
+        *) echo "Nem értem a parancsot.";;
+    esac
+done
